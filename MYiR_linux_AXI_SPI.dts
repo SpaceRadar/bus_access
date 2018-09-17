@@ -1,0 +1,35 @@
+#include "zynq-zed.dts"
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+
+/*Extends the SoC with a soft component. */
+/ {
+
+
+        amba {
+
+		slcr@f8000000 {
+			clkc@100 {
+				fclk-enable = <0xf>;
+			};
+		};
+
+                bus_access@41200000 {
+			#address-cells = < 1 >;
+			#size-cells = < 1 >;
+              	        compatible = "alex,bus_access";
+                        reg = < 0x41200000 0x0020 >;
+                };
+                bus_access@41210000 {
+			#address-cells = < 1 >;
+			#size-cells = < 1 >;
+              	        compatible = "alex,bus_access";
+                        reg = < 0x41210000 0040 >;
+                };
+        };
+
+	chosen {
+		bootargs = "earlycon root=/dev/ram rw devtmpfs.mount=1";
+		stdout-path = "serial0:115200n8";
+	};
+};

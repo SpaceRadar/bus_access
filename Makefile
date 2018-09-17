@@ -1,6 +1,6 @@
 ifeq ($(KERNELRELEASE),)
 
-    KERNELDIR ?= /home/alex/Zynq/kernel/linux-analog-new/linux
+    KERNELDIR ?= /home/alex/Zynq/kernel/buildroot-2018.05.1/output/build/linux-4.16/
     PWD := $(shell pwd)
 
 modules:

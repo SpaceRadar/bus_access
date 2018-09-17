@@ -96,7 +96,7 @@ ssize_t read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
       count = sizeof(inner_buff);
 
     printk(KERN_INFO DRIVER_NAME": read %d\n", count);
-#if 0
+#if 1
     for(idx=0; idx<count; idx+=4)
     {
       inner_buff[idx>>2]=ioread32(device_data->regs+*f_pos+idx);
@@ -124,7 +124,7 @@ ssize_t write(struct file *filp, const char __user *buf, size_t count, loff_t *f
       return -EIO;
     }
 
-    printk(KERN_INFO DRIVER_NAME": try to write to 0x%x  0x%x bytes\n", (unsigned int)*f_pos, count);
+    printk(KERN_INFO DRIVER_NAME": 1 try to write to 0x%x  0x%x bytes\n", (unsigned int)*f_pos, count);
 
 
     if(*f_pos >= device_data->size)
@@ -136,7 +136,7 @@ ssize_t write(struct file *filp, const char __user *buf, size_t count, loff_t *f
     if(count > sizeof(inner_buff))
       count = sizeof(inner_buff);
 
-#if 0
+#if 1
     if(copy_from_user(inner_buff,buf,count))
     {
         return -EFAULT;
@@ -205,6 +205,8 @@ static int bus_access_driver_probe(struct platform_device* pdev)
         printk(KERN_ERR DRIVER_NAME":ioremap error\n");
 	goto misc_deregister;
     }
+    device_data->address = res->start;
+    device_data->size = resource_size(res);
 
     platform_set_drvdata(pdev,device_data);
     printk(KERN_INFO DRIVER_NAME": %s registered. Start address: %x   length: %x\n", device_data->file_name, res->start, resource_size(res));
